@@ -149,27 +149,39 @@ def listar_Consumo():
 
 #Crear Facturas
 
+@app.route('/factura/historial', methods=['GET', 'POST'])
+def Factura_Historial():
+    return render_template('Historial_Facturas.html')
+
 @app.route('/factura', methods=['GET', 'POST'])
 def Factura():
     return render_template('Crear_Factura.html')
 
 
-@app.route('/factura/crear_factura/<int:ClienteID>/<int:Mes>/<int:Anio>', methods=['GET', 'POST'])
+@app.route('/crear_factura/<int:ClienteID>/<int:Mes>/<int:Anio>', methods=['GET', 'POST'])
 def crear_factura(ClienteID, Mes, Anio):
+    # Obtener datos del cliente y consumo
     cliente = Cliente.query.get_or_404(ClienteID)
-    consumo = Consumo.query.filter_by(ClienteID=ClienteID, Mes=Mes, Anio=Anio).first_or_404()
-    
-    # Calcular el total a pagar (esto es solo un ejemplo; ajusta según tu lógica de precios)
-    total_a_pagar = consumo.Consumo_KWH * 0.12  # Por ejemplo, $0.12 por KWh
+    consumo = Consumo.query.filter_by(ClienteID=ClienteID, Mes=Mes, Anio=Anio).first()
+
+    # Verificar si el consumo fue encontrado
+    if not consumo:
+        flash('No se encontraron datos de consumo para el cliente en el mes/año especificado.', 'error')
+        return redirect(url_for('listar_Clientes'))
+
+    # Calcular el total a pagar
+    total_a_pagar = consumo.Consumo_KWH * 0.12  # Ajusta según tu tarifa
+
+    print(f"Cliente: {cliente.Nombre}, Consumo: {consumo.Consumo_KWH}, Total a pagar: {total_a_pagar}")
 
     if request.method == 'POST':
         try:
             # Crear la factura
             nueva_factura = Facturas(
-                ClienteID=ClienteID,
+                ClienteID=cliente,
                 Mes=Mes,
                 Anio=Anio,
-                Consumo_KWH=consumo.Consumo_KWH,
+                Consumo_KWH=consumo,
                 Total_Pagar=total_a_pagar,
                 Fecha_Emision=datetime.now()
             )
@@ -178,12 +190,15 @@ def crear_factura(ClienteID, Mes, Anio):
             db.session.commit()
             
             flash('Factura creada exitosamente', 'success')
-            return redirect(url_for('listar_Clientes'))
+            return redirect(url_for('Factura'))
         except Exception as e:
             db.session.rollback()
             flash(f'Error al crear factura: {e}', 'error')
 
-    return render_template('Crear_Factura.html', ClienteID=ClienteID, Mes=Mes, Anio=Anio, consumo=consumo, total_a_pagar=total_a_pagar)
+    # Renderizar plantilla con datos del cliente y consumo
+    return render_template('Crear_Factura.html', ClienteID=cliente, Mes=Mes, Anio=Anio, Consumo_KWH=consumo, Total_Pagar=total_a_pagar)
+
+
 
 
 
