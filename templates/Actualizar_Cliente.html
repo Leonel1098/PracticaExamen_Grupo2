@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Cliente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Actualizar Datos de Cliente</h1>
+
+            <form method="post" action="{{ url_for('actualizar_Clientes', ClienteID=cliente.ClienteID) }}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Nombre"><i class="fas fa-user"></i> Nombre</label>
+                        <input type="text" id="Nombre" name="Nombre" class="form-control" value="{{ cliente.Nombre }}" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Direccion"><i class="fas fa-id-card"></i> Dirección</label>
+                        <input type="text" id="Direccion" name="Direccion" class="form-control" value="{{ cliente.Direccion }}" placeholder="Dirección" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="Email" name="Email" class="form-control" value="{{ cliente.Email }}" placeholder="Correo" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Telefono"><i class="fas fa-phone"></i> Teléfono</label>
+                        <input type="text" id="Telefono" name="Telefono" class="form-control" value="{{ cliente.Telefono }}" placeholder="Teléfono" required>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mr-2"><i class="fas fa-save"></i> Actualizar Cliente</button>
+                    <a href="{{ url_for('listar_Clientes') }}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Regresar a la Lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

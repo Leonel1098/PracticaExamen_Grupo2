@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Listado de Consumos</h2>
+
+<form method="get" action="{{ url_for('listar_Consumo') }}" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" name="ClienteID" class="form-control" value="{{ filtro_ClienteID if filtro_ClienteID is not none else '' }}" placeholder="ID del Cliente">
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+
+
+<a href="{{ url_for('agregar_Consumo') }}" class="btn btn-primary mb-3">Agregar Consumo</a>
+<a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">Regresar al Inicio</a>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Mes</th>
+            <th>Año</th>
+            <th>Consumo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if consumos %}
+            {% for consumo in consumos %}
+            <tr>
+                <td>{{ consumo.ConsumoID }}</td>
+                <td>{{ consumo.ClienteID }}</td>
+                <td>{{ consumo.Mes }}</td>
+                <td>{{ consumo.Anio }}</td>
+                <td>{{ consumo.Consumo_KWH }}</td>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7">No se encontraron consumos.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

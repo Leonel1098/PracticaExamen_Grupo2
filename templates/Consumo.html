@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Consumos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Gestión de Consumos</h1>
+
+            <!-- Formulario para agregar consumos -->
+            <form method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ClienteID"><i class="fas fa-user"></i> Cliente</label>
+                        <select id="ClienteID" name="ClienteID" class="form-control" required>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.ClienteID }}">{{ cliente.Nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Mes"><i class="fas fa-calendar-alt"></i> Mes</label>
+                        <input type="text" id="Mes" name="Mes" class="form-control" placeholder="Mes (Ej. Enero)" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Anio"><i class="fas fa-calendar"></i> Año</label>
+                        <input type="number" id="Anio" name="Anio" class="form-control" placeholder="Año (Ej. 2024)" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Consumo"><i class="fas fa-bolt"></i> Consumo (kWh)</label>
+                        <input type="number" id="Consumo" name="Consumo" class="form-control" placeholder="Consumo en kWh" step="0.01" required>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mr-2"><i class="fas fa-plus"></i> Agregar Consumo</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg"><i class="fas fa-home"></i> Regresar al Inicio</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla para mostrar consumos existentes -->
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Mes</th>
+                    <th>Año</th>
+                    <th>Consumo (kWh)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if consumos %}
+                    {% for consumo in consumos %}
+                    <tr>
+                        <td>{{ consumo.cliente.Nombre }}</td>
+                        <td>{{ consumo.Mes }}</td>
+                        <td>{{ consumo.Anio }}</td>
+                        <td>{{ consumo.Consumo_KWH }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No se encontraron registros de consumo.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

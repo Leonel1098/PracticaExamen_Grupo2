@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Factura</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Crear Factura</h2>
+                
+                <!-- Detalles del cliente y consumo -->
+                <div class="mb-4">
+                    <h4>Detalles del Cliente</h4>
+                    <p><strong>Cliente ID:</strong> {{ ClienteID }}</p>
+                    <p><strong>Mes:</strong> {{ Mes }}</p>
+                    <p><strong>Año:</strong> {{ Anio }}</p>
+                    <p><strong>Consumo:</strong> {{ consumo.Consumo_KWH }} KWh</p>
+                    <p><strong>Total a Pagar:</strong> {{ total_a_pagar }} USD</p>
+                </div>
+
+                <!-- Formulario para confirmar la creación de la factura -->
+                <form method="post">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-file-invoice-dollar"></i> Confirmar y Crear Factura</button>
+                        <a href="{{ url_for('listar_Clientes') }}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

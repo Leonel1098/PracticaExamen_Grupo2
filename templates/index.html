@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron text-center py-5">
+    <h2 class="display-4">Bienvenido al portal de Empresa Electrica de Guatemala</h2>
+    <p class="lead">Gestiona y administra inventario de clientes,  y registra el historial de consumos de energia.</p>
+    <hr class="my-4">
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('listar_Clientes') }}" class="btn btn-outline-primary btn-lg btn-block">
+                <i class="fas fa-car"></i> Ver Clientes
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('listar_Consumo') }}" class="btn btn-outline-primary btn-lg btn-block">
+                <i class="fas fa-users"></i> Ver Consumo
+            </a>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
